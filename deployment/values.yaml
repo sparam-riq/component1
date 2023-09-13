@@ -1,0 +1,10 @@
+replicaCount: 1
+image:
+  repository: kaniko-test
+  tag: latest
+  pullPolicy: Always
+
+service:
+  name: hello-world-app
+  type: ClusterIP
+  port: 8080

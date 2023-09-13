@@ -1,8 +1,11 @@
-FROM openjdk:8
+# Use the official OpenJDK base image
+FROM openjdk:8-jre-alpine
 
-RUN apt-get update && \
-    apt-get install build-essential maven default-jdk cowsay netcat -y && \
-    update-alternatives --config javac
-COPY . .
+# Set the working directory in the container
+WORKDIR /app
 
-CMD ["mvn", "spring-boot:run"]
+# Copy the built JAR file into the container
+COPY target/HelloWorld-0.0.1-SNAPSHOT.jar .
+
+# Define the command to run the application
+CMD ["java", "-jar", "HelloWorld-0.0.1-SNAPSHOT.jar"]
