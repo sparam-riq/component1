@@ -22,7 +22,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.SECRET_KEY_ECR }}
           aws-region: us-west-2
       - name: DockerBuild
-        uses: cloudbees-io/kaniko
+        uses: cloudbees-io/kaniko@v1
         with:
           destination: 091185144220.dkr.ecr.us-west-2.amazonaws.com/kaniko-test:${{
             cloudbees.scm.sha }}
