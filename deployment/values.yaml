@@ -5,6 +5,6 @@ image:
   pullPolicy: Always
 
 service:
-  name: hello-world-app
+  name: demo-component1
   type: ClusterIP
   port: 8080
