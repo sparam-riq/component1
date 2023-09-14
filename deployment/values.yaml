@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: kaniko-test
+  repository: demo_component1
   tag: latest
   pullPolicy: Always
 
