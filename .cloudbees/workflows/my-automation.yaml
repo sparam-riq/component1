@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-    if: ${{ vars.TENANT_NAME == 'staging1' }}
     steps:
       - name: Checkout
         uses: cloudbees-io/checkout@v1.0.2
@@ -27,6 +26,10 @@ jobs:
         uses: cloudbees-io/kaniko@v1
         with:
           destination: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1:${{ cloudbees.scm.sha }}
+  deploy-staging:
+    needs: build
+    if: ${{ vars.TENANT_NAME == 'prod' }}
+    steps:
       - name: Deploy Using CBCI
         uses: cloudbees-io/cbci-run-job
         with:
