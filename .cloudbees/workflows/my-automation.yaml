@@ -6,8 +6,8 @@ on:
     branches:
       - "**"
 
-if: ${{ vars.TENANT_NAME }} == 'staging'
 jobs:
+  if: ${{ vars.TENANT_NAME }} == 'staging'
   build:
     steps:
       - name: Checkout
