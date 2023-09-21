@@ -5,8 +5,10 @@ on:
   push:
     branches:
       - "**"
+
 jobs:
   build:
+  if: ${{ vars.TENANT_NAME, 'staging' }}
     steps:
       - name: Checkout
         uses: cloudbees-io/checkout@v1.0.2
