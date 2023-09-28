@@ -63,3 +63,4 @@ jobs:
           password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
           job-name: deploy_component1
           parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
+
