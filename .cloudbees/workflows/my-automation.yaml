@@ -45,11 +45,11 @@ jobs:
           destination: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1:${{ cloudbees.scm.sha }}
           
       - name: Running container scan using Trivy
-      uses: cloudbees-io/trivy-scan-container@v1
-      with:
-        image-location: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1
-        image-tag: ${{ cloudbees.scm.sha }}
-        language: "LANGUAGE_JAVA"
+        uses: cloudbees-io/trivy-scan-container@v1
+        with:
+          image-location: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1
+          image-tag: ${{ cloudbees.scm.sha }}
+          language: "LANGUAGE_JAVA"
 
   deploy-staging:
     needs: build
