@@ -17,14 +17,14 @@ jobs:
           orgname: ${{ secrets.SNYK_SAST_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
           gh_secret_access_token: ${{ secrets.GIT_SECRET_ACCESS_TOKEN }}
-          language: "LANGUAGE_GO"
+          language: "LANGUAGE_JAVA"
           
       - name: Running Snyk SAST Scan
         uses: cloudbees-io/snyk-sast-scan-code@v1
         with:
           orgname: ${{ secrets.SNYK_SAST_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
-          language: "LANGUAGE_GO"
+          language: "LANGUAGE_JAVA"
           
       - name: Maven Build
         uses: docker://maven:3.8.7-openjdk-18-slim
