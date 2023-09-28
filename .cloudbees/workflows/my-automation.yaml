@@ -23,7 +23,7 @@ jobs:
         uses: cloudbees-io/snyk-sast-scan-code@v1
         with:
           orgname: ${{ secrets.SNYK_SAST_ORG_NAME }}
-          token: ${{ secrets.SNYK_SAST_TOKEN }}
+          token: ${{ secrets.SNYK_SAAS_TOKEN }}
           language: "LANGUAGE_GO"
           
       - name: Maven Build
