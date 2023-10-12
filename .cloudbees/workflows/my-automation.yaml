@@ -14,15 +14,14 @@ jobs:
       - name: Running Snyk SCA scan
         uses: cloudbees-io/snyk-sca-scan-dependency@v1
         with:
-          orgname: ${{ secrets.SNYK_SAST_ORG_NAME }}
+          orgname: ${{ secrets.SNYK_SAAS_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
-          gh_secret_access_token: ${{ secrets.GIT_SECRET_ACCESS_TOKEN }}
           language: "LANGUAGE_JAVA"
           
       - name: Running Snyk SAST Scan
         uses: cloudbees-io/snyk-sast-scan-code@v1
         with:
-          orgname: ${{ secrets.SNYK_SAST_ORG_NAME }}
+          orgname: ${{ secrets.SNYK_SAAS_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
           language: "LANGUAGE_JAVA"
           
@@ -45,17 +44,12 @@ jobs:
         with:
           destination: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1:${{ cloudbees.scm.sha }}
           
-      # - name: Running container scan using Trivy
-      #   uses: cloudbees-io/trivy-scan-container@v1
-      #   with:
-      #     image-location: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1
-      #     image-tag: ${{ cloudbees.scm.sha }}
-      #     language: "LANGUAGE_JAVA"
+      - name: Running container scan using Trivy
+        uses: cloudbees-io/trivy-scan-container@v1
+        with:
+          image-location: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1
+          image-tag: ${{ cloudbees.scm.sha }}
 
-  deploy-staging:
-    needs: build
-    if: ${{ vars.TENANT_NAME == 'prod' }}
-    steps:
       - name: Deploy Using CBCI
         uses: cloudbees-io/cbci-run-job
         kind: deploy
@@ -65,4 +59,5 @@ jobs:
           password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
           job-name: deploy_component1
           parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
+
 
