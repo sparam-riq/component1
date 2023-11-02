@@ -27,7 +27,6 @@ jobs:
           language: "LANGUAGE_JAVA"
 
       - name: Run sonarqube bundled action from platform
-        if: ${{ inputs.bundled-sonar-scan == 'true' }}
         uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v1
                   
       - name: Maven Build
