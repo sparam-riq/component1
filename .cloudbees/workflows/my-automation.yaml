@@ -36,7 +36,7 @@ jobs:
           ls -lrt target/
           
       - name: ConfigureAWSCredentials
-        uses: cloudbees-io/configure-aws-credentials@v0.0.4
+        uses: cloudbees-io/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.RIQ_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.RIQ_SECRET_KEY }}
