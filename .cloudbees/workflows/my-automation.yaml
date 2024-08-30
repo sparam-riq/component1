@@ -33,13 +33,11 @@ jobs:
           ls -lrt target/
           
       - name: launchable-test
-        uses: docker://python:latest
+        uses: docker://rappdw/docker-java-python:latest
         shell: sh
         run: |
           pip3 --version
           pip3 install --user --upgrade launchable
-          apt-get update
-          apt-get install -y openjdk-17-jdk
           java --version
           export LAUNCHABLE_TOKEN=${{ secrets.launchable_token }}
           echo $PATH
