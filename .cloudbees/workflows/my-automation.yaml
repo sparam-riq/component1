@@ -45,4 +45,4 @@ jobs:
           echo $PATH
           export PATH=$PATH:/cloudbees/home/.local/bin
           launchable verify
-          
+          launchable record tests --no-build maven "target/surefire-reports"
