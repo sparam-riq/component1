@@ -10,27 +10,27 @@ jobs:
   build:
     environment: stage
     steps:
-      # - name: Checkout
-      #   uses: cloudbees-io/checkout@v1
-      # - name: Running Snyk SCA scan
-      #   uses: cloudbees-io/snyk-sca-scan-dependency@v1
-      #   with:
-      #     orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
-      #     token: ${{ secrets.SNYK_SAAS_TOKEN }}
-      #     language: "LANGUAGE_JAVA"
+      - name: Checkout
+        uses: cloudbees-io/checkout@v1
+      - name: Running Snyk SCA scan
+        uses: cloudbees-io/snyk-sca-scan-dependency@v1
+        with:
+          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+          token: ${{ secrets.SNYK_SAAS_TOKEN }}
+          language: "LANGUAGE_JAVA"
           
-      # - name: Running Snyk SAST Scan
-      #   uses: cloudbees-io/snyk-sast-scan-code@v1
-      #   with:
-      #     orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
-      #     token: ${{ secrets.SNYK_SAAS_TOKEN }}
-      #     language: "LANGUAGE_JAVA"
+      - name: Running Snyk SAST Scan
+        uses: cloudbees-io/snyk-sast-scan-code@v1
+        with:
+          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+          token: ${{ secrets.SNYK_SAAS_TOKEN }}
+          language: "LANGUAGE_JAVA"
         
-      # - name: Maven Build
-      #   uses: docker://maven:3.8.7-openjdk-18-slim
-      #   run: |
-      #     mvn clean install
-      #     ls -lrt target/
+      - name: Maven Build
+        uses: docker://maven:3.8.7-openjdk-18-slim
+        run: |
+          mvn clean install
+          ls -lrt target/
           
       - name: launchable-test
         uses: docker://python:latest
@@ -46,31 +46,3 @@ jobs:
           export PATH=$PATH:/cloudbees/home/.local/bin
           launchable verify
           
-      - name: ConfigureAWSCredentials
-        uses: cloudbees-io/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.RIQ_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.RIQ_SECRET_KEY }}
-          aws-region: us-west-2
-          
-      - name: DockerBuild
-        uses: cloudbees-io/kaniko@v1
-        kind: build
-        with:
-          destination: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1:${{ cloudbees.scm.sha }}
-          
-      # - name: Running container scan using Trivy
-      #   uses: cloudbees-io/trivy-scan-container@v1
-      #   with:
-      #     image-location: 641518622681.dkr.ecr.us-west-2.amazonaws.com/demo_component1
-      #     image-tag: ${{ cloudbees.scm.sha }}
-
-      - name: Deploy Using CBCI
-        uses: cloudbees-io/cbci-run-job
-        kind: deploy
-        with:
-          url: https://releaseiq.ironman.releaseiq.io/
-          username: ${{ secrets.CBCI_IRONMAN_USERNAME }}
-          token: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
-          job-name: deploy_component1
-          parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
