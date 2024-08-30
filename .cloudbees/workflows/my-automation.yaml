@@ -37,6 +37,17 @@ jobs:
           mvn clean install
           ls -lrt target/
           
+      - name: launchable-test
+        uses: docker://python:latest
+        shell: sh
+        run: |
+          pip3 --version
+          pip3 install --user --upgrade launchable
+          export LAUNCHABLE_TOKEN=${{ secrets.launchable_token }}
+          echo $PATH
+          export PATH=$PATH:/cloudbees/home/.local/bin
+          launchable verify
+          
       - name: ConfigureAWSCredentials
         uses: cloudbees-io/configure-aws-credentials@v1
         with:
