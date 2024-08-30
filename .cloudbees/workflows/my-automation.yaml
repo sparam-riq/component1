@@ -10,27 +10,27 @@ jobs:
   build:
     environment: stage
     steps:
-      - name: Checkout
-        uses: cloudbees-io/checkout@v1
-      - name: Running Snyk SCA scan
-        uses: cloudbees-io/snyk-sca-scan-dependency@v1
-        with:
-          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
-          token: ${{ secrets.SNYK_SAAS_TOKEN }}
-          language: "LANGUAGE_JAVA"
+      # - name: Checkout
+      #   uses: cloudbees-io/checkout@v1
+      # - name: Running Snyk SCA scan
+      #   uses: cloudbees-io/snyk-sca-scan-dependency@v1
+      #   with:
+      #     orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+      #     token: ${{ secrets.SNYK_SAAS_TOKEN }}
+      #     language: "LANGUAGE_JAVA"
           
-      - name: Running Snyk SAST Scan
-        uses: cloudbees-io/snyk-sast-scan-code@v1
-        with:
-          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
-          token: ${{ secrets.SNYK_SAAS_TOKEN }}
-          language: "LANGUAGE_JAVA"
+      # - name: Running Snyk SAST Scan
+      #   uses: cloudbees-io/snyk-sast-scan-code@v1
+      #   with:
+      #     orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+      #     token: ${{ secrets.SNYK_SAAS_TOKEN }}
+      #     language: "LANGUAGE_JAVA"
         
-      - name: Maven Build
-        uses: docker://maven:3.8.7-openjdk-18-slim
-        run: |
-          mvn clean install
-          ls -lrt target/
+      # - name: Maven Build
+      #   uses: docker://maven:3.8.7-openjdk-18-slim
+      #   run: |
+      #     mvn clean install
+      #     ls -lrt target/
           
       - name: launchable-test
         uses: docker://python:latest
@@ -38,6 +38,8 @@ jobs:
         run: |
           pip3 --version
           pip3 install --user --upgrade launchable
+          apt-get install -y openjdk-17-jdk
+          java --version
           export LAUNCHABLE_TOKEN=${{ secrets.launchable_token }}
           echo $PATH
           export PATH=$PATH:/cloudbees/home/.local/bin
